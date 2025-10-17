@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Modern Profile Card</title>
+  <meta name="description" content="Modern, accessible profile card with advanced styling and test IDs" />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+    <article class="card" data-testid="test-profile-card" aria-label="User profile card">
+      
+      <!-- Left column: avatar + upload -->
+      <div class="card-left">
+        <figure class="avatar-figure">
+          <img
+            src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400&auto=format&fit=crop&crop=faces"
+            alt="Profile picture of Joana Munduru"
+            class="avatar"
+            data-testid="test-user-avatar"
+            id="avatarImage"
+          />
+          <figcaption class="name" data-testid="test-user-name">Joana Munduru</figcaption>
+        </figure>
+
+        <label for="avatarUpload" class="upload-btn" aria-label="Upload avatar">
+          <input id="avatarUpload" type="file" accept="image/*" class="sr-only" />
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M12 5v8M7 10l5-5 5 5M5 18h14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Upload</span>
+        </label>
+      </div>
+
+      <!-- Right column: content -->
+      <div class="card-right">
+        <header class="header">
+          <h1 class="visually-hidden" aria-hidden="true">Profile</h1>
+          <p class="role">Frontend Developer · Data Enthusiast</p>
+          <p class="bio" data-testid="test-user-bio">
+            Passionate about building user-centered interfaces and turning data into meaningful stories. Lover of clean code and intentional design.
+          </p>
+        </header>
+
+        <section class="meta">
+          <div class="time">
+            <label class="meta-label">Current time (ms)</label>
+            <div class="time-value" data-testid="test-user-time" aria-live="polite"></div>
+          </div>
+
+          <nav class="social" aria-label="Social links" data-testid="test-user-social-links">
+            <ul>
+              <li>
+                <a href="https://x.com/mundurujoana" 
+                   target="_blank" rel="noopener noreferrer" 
+                   data-testid="test-user-social-twitter" 
+                   aria-label="Twitter (X)">Twitter (X)</a>
+              </li>
+              <li>
+                <a href="https://github.com/Mundurujoana" 
+                   target="_blank" rel="noopener noreferrer" 
+                   data-testid="test-user-social-github" 
+                   aria-label="GitHub">GitHub</a>
+              </li>
+              <li>
+                <a href="https://www.linkedin.com/in/munduru-joana/" 
+                   target="_blank" rel="noopener noreferrer" 
+                   data-testid="test-user-social-linkedin" 
+                   aria-label="LinkedIn">LinkedIn</a>
+              </li>
+            </ul>
+          </nav>
+        </section>
+
+        <section class="lists">
+          <div class="list-col">
+            <h2 class="list-title">Hobbies</h2>
+            <ul data-testid="test-user-hobbies" class="chip-list" aria-label="Hobbies">
+              <li><span class="chip">Coding</span></li>
+              <li><span class="chip">Reading</span></li>
+              <li><span class="chip">Music</span></li>
+            </ul>
+          </div>
+
+          <div class="list-col">
+            <h2 class="list-title">Dislikes</h2>
+            <ul data-testid="test-user-dislikes" class="chip-list" aria-label="Dislikes">
+              <li><span class="chip">Procrastination</span></li>
+              <li><span class="chip">Negative Energy</span></li>
+                            <li><span class="chip">Disrespect</span></li>
+
+            </ul>
+          </div>
+        </section>
+      </div>
+    </article>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
