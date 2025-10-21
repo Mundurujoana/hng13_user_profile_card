@@ -1,23 +1,19 @@
-// ------------------- Display Current Time -------------------
-function displayTime() {
-  const timeEl = document.getElementById("time");
-  if (!timeEl) return;
-
-  const now = new Date();
-  const timeString = now.toLocaleTimeString();
-  const ms = now.getMilliseconds();
-
-  timeEl.innerHTML = `${timeString} <span class="ms">${ms}ms</span>`;
-}
-
-displayTime();
-setInterval(displayTime, 50);
-
 // ------------------- Contact Form Handling -------------------
 const contactForm = document.getElementById("contactForm");
 const overlay = document.getElementById("overlay");
 const successPopup = document.getElementById("success-popup");
 const closePopupBtn = document.getElementById("close-popup");
+
+const fields = ["name", "email", "subject", "message"];
+
+// Clear error when user types
+fields.forEach((fieldId) => {
+  const field = document.getElementById(fieldId);
+  const errorDiv = document.getElementById(`error-${fieldId}`);
+  field.addEventListener("input", () => {
+    errorDiv.textContent = "";
+  });
+});
 
 if (contactForm) {
   contactForm.addEventListener("submit", function(e) {
@@ -50,10 +46,7 @@ if (contactForm) {
     }
 
     if (!hasError) {
-      // Reset form
       contactForm.reset();
-
-      // Show overlay and popup
       overlay.style.display = "flex";
       successPopup.style.display = "block";
     }
@@ -68,10 +61,10 @@ if (closePopupBtn) {
   });
 }
 
-const navToggle =
- document.querySelector(".nav-toggle"); 
- const navMenu = document.querySelector(".nav-menu"); 
- const bars = document.querySelectorAll(".bar"); 
- navToggle.addEventListener("click", () => 
-  { navMenu.classList.toggle("active"); 
-    bars.forEach(bar => bar.classList.toggle("active")); });
+// Close popup when clicking outside
+overlay.addEventListener("click", (e) => {
+  if (e.target === overlay) {
+    overlay.style.display = "none";
+    successPopup.style.display = "none";
+  }
+});
