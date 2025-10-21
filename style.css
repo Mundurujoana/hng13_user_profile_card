@@ -194,7 +194,7 @@ body::before {
 }
 
 .profile-container h2 {
-  font-size: 1.8rem; /* increased from 1.6rem */
+  font-size: 1.95rem; /* increased from 1.6rem */
   font-weight: 700;
   background: linear-gradient(135deg, #fb923c, #f97316);
   -webkit-background-clip: text;
@@ -203,7 +203,7 @@ body::before {
   margin: 0.5rem 0;
 }
 .profile-container p {
-  font-size: 0.95rem; /* increased from 0.85rem */
+  font-size: 0.9rem; /* increased from 0.85rem */
   color: var(--gray);
   text-align: center;
   line-height: 1.5;
