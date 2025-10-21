@@ -15,11 +15,15 @@ setInterval(displayTime, 50);
 
 // ------------------- Contact Form Handling -------------------
 const contactForm = document.getElementById("contactForm");
+const overlay = document.getElementById("overlay");
+const successPopup = document.getElementById("success-popup");
+const closePopupBtn = document.getElementById("close-popup");
 
 if (contactForm) {
-  contactForm.addEventListener("submit", function (e) {
+  contactForm.addEventListener("submit", function(e) {
     e.preventDefault();
 
+    // Clear previous errors
     document.querySelectorAll(".error").forEach(el => (el.textContent = ""));
     let hasError = false;
 
@@ -32,60 +36,34 @@ if (contactForm) {
       document.getElementById("error-name").textContent = "Please enter your name.";
       hasError = true;
     }
-
     if (!email.value.trim() || !/^\S+@\S+\.\S+$/.test(email.value)) {
       document.getElementById("error-email").textContent = "Please enter a valid email.";
       hasError = true;
     }
-
     if (!subject.value.trim()) {
       document.getElementById("error-subject").textContent = "Please enter a subject.";
       hasError = true;
     }
-
     if (!message.value.trim()) {
       document.getElementById("error-message").textContent = "Please enter a message.";
       hasError = true;
     }
 
     if (!hasError) {
+      // Reset form
       contactForm.reset();
-      showToast("Message sent successfully!");
+
+      // Show overlay and popup
+      overlay.style.display = "flex";
+      successPopup.style.display = "block";
     }
   });
 }
 
-// ------------------- Toast Function -------------------
-function showToast(msg) {
-  const toast = document.createElement("div");
-  toast.className = "toast";
-  toast.textContent = msg;
-  document.body.appendChild(toast);
-
-  setTimeout(() => {
-    toast.classList.add("show");
-  }, 10);
-
-  setTimeout(() => {
-    toast.classList.remove("show");
-    setTimeout(() => document.body.removeChild(toast), 300);
-  }, 3000);
+// Close popup
+if (closePopupBtn) {
+  closePopupBtn.addEventListener("click", () => {
+    overlay.style.display = "none";
+    successPopup.style.display = "none";
+  });
 }
-
-
- const navToggle = document.querySelector(".nav-toggle");
-  const navMenu = document.querySelector(".nav-menu");
-  const bars = document.querySelectorAll(".bar");
-
-  navToggle.addEventListener("click", () => {
-    navMenu.classList.toggle("active");
-    bars.forEach(bar => bar.classList.toggle("active"));
-  });
-
-  // Optional: Close menu when a link is clicked
-  document.querySelectorAll(".nav-link").forEach(link => {
-    link.addEventListener("click", () => {
-      navMenu.classList.remove("active");
-      bars.forEach(bar => bar.classList.remove("active"));
-    });
-  });

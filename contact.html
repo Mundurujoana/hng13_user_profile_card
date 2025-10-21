@@ -72,14 +72,16 @@
 
         <button type="submit" data-testid="test-contact-submit">Send Message</button>
 
-        <div
-          class="success"
-          data-testid="test-contact-success"
-          id="successMsg"
-          style="display: none;"
-        >
-          Your message has been sent successfully!
-        </div>
+        
+      <!-- Overlay & Popup -->
+<div class="overlay" id="overlay">
+  <div class="success-message" id="success-popup">
+          <h3> 🎉 Thank you</h3>
+    <p>Message submitted successfully.</p>
+    <button id="close-popup">Close</button>
+  </div>
+</div>
+
       </form>
     </section>
   </main>
