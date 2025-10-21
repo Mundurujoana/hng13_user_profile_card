@@ -246,7 +246,7 @@ body::before {
   border-radius: 8px;
   margin: 10px auto 0;
 }
-.time-container h3,
+.time-container ,
 .time-container p {
   font-size: 0.85rem; /* increased from 0.75rem */
 }
