@@ -67,3 +67,11 @@ if (closePopupBtn) {
     successPopup.style.display = "none";
   });
 }
+
+const navToggle =
+ document.querySelector(".nav-toggle"); 
+ const navMenu = document.querySelector(".nav-menu"); 
+ const bars = document.querySelectorAll(".bar"); 
+ navToggle.addEventListener("click", () => 
+  { navMenu.classList.toggle("active"); 
+    bars.forEach(bar => bar.classList.toggle("active")); });
