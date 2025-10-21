@@ -1,3 +1,18 @@
+
+function displayTime() {
+  const timeEl = document.getElementById("time");
+  if (!timeEl) return;
+
+  const now = new Date();
+  const timeString = now.toLocaleTimeString();
+  const ms = now.getMilliseconds();
+
+  timeEl.innerHTML = `${timeString} <span>${ms}ms</span>`;
+}
+
+displayTime();
+setInterval(displayTime, 50);
+
 // ------------------- Contact Form Handling -------------------
 const contactForm = document.getElementById("contactForm");
 const overlay = document.getElementById("overlay");
@@ -68,3 +83,12 @@ overlay.addEventListener("click", (e) => {
     successPopup.style.display = "none";
   }
 });
+
+   // Close mobile menu if open
+    const navMenu = document.querySelector('.nav-menu');
+    const navToggle = document.querySelector('.nav-toggle');
+    if(navMenu.classList.contains('active')){
+      navMenu.classList.remove('active');
+      navToggle.querySelectorAll('.bar').forEach(bar => bar.classList.remove('active'));
+    }
+
