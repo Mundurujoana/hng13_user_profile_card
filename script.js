@@ -1,4 +1,4 @@
-
+// =================== Display Current Time ===================
 function displayTime() {
   const timeEl = document.getElementById("time");
   if (!timeEl) return;
@@ -13,25 +13,50 @@ function displayTime() {
 displayTime();
 setInterval(displayTime, 50);
 
-// ------------------- Contact Form Handling -------------------
+// =================== Hamburger Menu ===================
+document.addEventListener('DOMContentLoaded', () => {
+  const navToggle = document.getElementById('mobile-menu'); // hamburger
+  const navMenu = document.querySelector('.nav-menu');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  if (navToggle && navMenu) {
+    // Toggle menu open/close
+    navToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+      navToggle.querySelectorAll('.bar').forEach(bar => bar.classList.toggle('active'));
+    });
+
+    // Close menu when clicking a link
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+        navToggle.querySelectorAll('.bar').forEach(bar => bar.classList.remove('active'));
+      });
+    });
+  }
+});
+
+// =================== Contact Form Handling (Only if Exists) ===================
 const contactForm = document.getElementById("contactForm");
 const overlay = document.getElementById("overlay");
 const successPopup = document.getElementById("success-popup");
 const closePopupBtn = document.getElementById("close-popup");
 
-const fields = ["name", "email", "subject", "message"];
-
-// Clear error when user types
-fields.forEach((fieldId) => {
-  const field = document.getElementById(fieldId);
-  const errorDiv = document.getElementById(`error-${fieldId}`);
-  field.addEventListener("input", () => {
-    errorDiv.textContent = "";
-  });
-});
-
 if (contactForm) {
-  contactForm.addEventListener("submit", function(e) {
+  const fields = ["name", "email", "subject", "message"];
+
+  // Clear error when user types
+  fields.forEach((fieldId) => {
+    const field = document.getElementById(fieldId);
+    const errorDiv = document.getElementById(`error-${fieldId}`);
+    if (field && errorDiv) {
+      field.addEventListener("input", () => {
+        errorDiv.textContent = "";
+      });
+    }
+  });
+
+  contactForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
     // Clear previous errors
@@ -62,33 +87,30 @@ if (contactForm) {
 
     if (!hasError) {
       contactForm.reset();
-      overlay.style.display = "flex";
-      successPopup.style.display = "block";
+      if (overlay && successPopup) {
+        overlay.style.display = "flex";
+        successPopup.style.display = "block";
+      }
     }
   });
-}
 
-// Close popup
-if (closePopupBtn) {
-  closePopupBtn.addEventListener("click", () => {
-    overlay.style.display = "none";
-    successPopup.style.display = "none";
-  });
-}
-
-// Close popup when clicking outside
-overlay.addEventListener("click", (e) => {
-  if (e.target === overlay) {
-    overlay.style.display = "none";
-    successPopup.style.display = "none";
+  // Close popup
+  if (closePopupBtn) {
+    closePopupBtn.addEventListener("click", () => {
+      if (overlay && successPopup) {
+        overlay.style.display = "none";
+        successPopup.style.display = "none";
+      }
+    });
   }
-});
 
-   // Close mobile menu if open
-    const navMenu = document.querySelector('.nav-menu');
-    const navToggle = document.querySelector('.nav-toggle');
-    if(navMenu.classList.contains('active')){
-      navMenu.classList.remove('active');
-      navToggle.querySelectorAll('.bar').forEach(bar => bar.classList.remove('active'));
-    }
-
+  // Close popup when clicking outside
+  if (overlay) {
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) {
+        overlay.style.display = "none";
+        successPopup.style.display = "none";
+      }
+    });
+  }
+}
