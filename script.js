@@ -1,66 +1,91 @@
-// Elements
-const timeEl = document.querySelector('[data-testid="test-user-time"]');
-const avatarInput = document.getElementById('avatarUpload');
-const avatarImg = document.getElementById('avatarImage');
-const nameEl = document.querySelector('[data-testid="test-user-name"]');
+// ------------------- Display Current Time -------------------
+function displayTime() {
+  const timeEl = document.getElementById("time");
+  if (!timeEl) return;
 
-// Format time into 12:45 PM
-function formatTime(date) {
-  let hours = date.getHours();
-  let minutes = date.getMinutes();
-  const ampm = hours >= 12 ? 'PM' : 'AM';
-  hours = hours % 12;
-  hours = hours ? hours : 12;
-  minutes = minutes < 10 ? '0' + minutes : minutes;
-  return `${hours}:${minutes} ${ampm}`;
-}
-
-// Update time every second
-function updateTime() {
   const now = new Date();
-  const humanReadable = formatTime(now);
-  const ms = Date.now();
-  timeEl.textContent = `${humanReadable} (${ms})`;
+  const timeString = now.toLocaleTimeString();
+  const ms = now.getMilliseconds();
+
+  timeEl.innerHTML = `${timeString} <span class="ms">${ms}ms</span>`;
 }
-updateTime();
-setInterval(updateTime, 1000);
 
-// Avatar upload handling
-avatarInput.addEventListener('change', (e) => {
-  const file = e.target.files && e.target.files[0];
-  if (!file) return;
-  if (!file.type.startsWith('image/')) {
-    alert('Please select an image file.');
-    return;
-  }
+displayTime();
+setInterval(displayTime, 50);
 
-  if (avatarImg.dataset.objectUrl) {
-    URL.revokeObjectURL(avatarImg.dataset.objectUrl);
-    delete avatarImg.dataset.objectUrl;
-  }
+// ------------------- Contact Form Handling -------------------
+const contactForm = document.getElementById("contactForm");
 
-  const objectUrl = URL.createObjectURL(file);
-  avatarImg.src = objectUrl;
-  avatarImg.alt = `Uploaded profile picture of ${nameEl.textContent || 'user'}`;
-  avatarImg.dataset.objectUrl = objectUrl;
-});
-
-// Keyboard accessibility for upload
-const uploadLabel = document.querySelector('.upload-btn');
-uploadLabel.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter' || e.key === ' ') {
+if (contactForm) {
+  contactForm.addEventListener("submit", function (e) {
     e.preventDefault();
-    avatarInput.click();
-  }
-});
-uploadLabel.setAttribute('tabindex', '0');
 
-// Ensure links are keyboard-focusable
-document.querySelectorAll('a').forEach(a => {
-  a.setAttribute('tabindex', '0');
-});
+    document.querySelectorAll(".error").forEach(el => (el.textContent = ""));
+    let hasError = false;
 
-// Cleanup on unload
-window.addEventListener('beforeunload', () => {
-  if (avatarImg.dataset.objectUrl) URL.revokeObjectURL(avatarImg.dataset.objectUrl);
-});
+    const name = document.getElementById("name");
+    const email = document.getElementById("email");
+    const subject = document.getElementById("subject");
+    const message = document.getElementById("message");
+
+    if (!name.value.trim()) {
+      document.getElementById("error-name").textContent = "Please enter your name.";
+      hasError = true;
+    }
+
+    if (!email.value.trim() || !/^\S+@\S+\.\S+$/.test(email.value)) {
+      document.getElementById("error-email").textContent = "Please enter a valid email.";
+      hasError = true;
+    }
+
+    if (!subject.value.trim()) {
+      document.getElementById("error-subject").textContent = "Please enter a subject.";
+      hasError = true;
+    }
+
+    if (!message.value.trim()) {
+      document.getElementById("error-message").textContent = "Please enter a message.";
+      hasError = true;
+    }
+
+    if (!hasError) {
+      contactForm.reset();
+      showToast("Message sent successfully!");
+    }
+  });
+}
+
+// ------------------- Toast Function -------------------
+function showToast(msg) {
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.textContent = msg;
+  document.body.appendChild(toast);
+
+  setTimeout(() => {
+    toast.classList.add("show");
+  }, 10);
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+    setTimeout(() => document.body.removeChild(toast), 300);
+  }, 3000);
+}
+
+
+ const navToggle = document.querySelector(".nav-toggle");
+  const navMenu = document.querySelector(".nav-menu");
+  const bars = document.querySelectorAll(".bar");
+
+  navToggle.addEventListener("click", () => {
+    navMenu.classList.toggle("active");
+    bars.forEach(bar => bar.classList.toggle("active"));
+  });
+
+  // Optional: Close menu when a link is clicked
+  document.querySelectorAll(".nav-link").forEach(link => {
+    link.addEventListener("click", () => {
+      navMenu.classList.remove("active");
+      bars.forEach(bar => bar.classList.remove("active"));
+    });
+  });
