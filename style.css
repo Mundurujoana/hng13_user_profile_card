@@ -500,3 +500,11 @@ footer {
     z-index: 1003; /* make sure the toggle sits above the menu while animating */
   }
 }
+
+.contact.card h2 {
+  text-align: center;
+}
+
+.about.card h3 {
+  text-align: left; /* keep subheadings left-aligned */
+} 
